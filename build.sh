@@ -15,10 +15,10 @@ OUT_DIR=$(dirname "$(realpath "$0")")/rootfs
 
 mkdir -p $OUT_DIR
 sudo apt install -y curl git mmdebstrap qemu-user-static usrmerge usr-is-merged binfmt-support systemd-container
-# 开启异架构支持
+# 开启异架构支持 
 sudo systemctl start systemd-binfmt
 
-# 安装软件包签名公钥
+# 安装软件包签名公钥 
 curl http://archive.build.openkylin.top/openkylin/pool/main/o/openkylin-keyring/openkylin-keyring_2022.05.12-ok1_all.deb --output openkylin-keyring.deb
 sudo apt install ./openkylin-keyring.deb && rm ./openkylin-keyring.deb
 

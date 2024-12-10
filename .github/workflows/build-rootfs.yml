@@ -26,7 +26,6 @@ jobs:
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
-          # 这个值是保留给系统的空间大小，之前设置太小，总会在安装依赖或者编译过程中报设备空间不足的错误而导致编译失败 
           root-reserve-mb: 4096
           swap-size-mb: 512
           remove-dotnet: 'true'
@@ -53,14 +52,11 @@ jobs:
         id: read_version
         run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
 
-      - name: Upload file to release
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Upload build files as artifacts
+        uses: actions/upload-artifact@v3
         with:
-          repo_token: "${{ env.GITHUB_TOKEN }}"
-          automatic_release_tag: "v${{ env.VERSION }}"
-          prerelease: true
-          title: "v${{ env.VERSION }}"
-          files: |
+          name: rootfs-files
+          path: |
             rootfs/openkylin-rootfs-amd64.tar.gz
             rootfs/openkylin-rootfs-arm64.tar.gz
             rootfs/openkylin-rootfs-riscv64.tar.gz

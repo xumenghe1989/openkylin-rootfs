@@ -39,7 +39,7 @@ for arch in amd64 arm64; do
 
     # 创建一个空的磁盘镜像文件
     IMG_FILE=$OUT_DIR/$dist_name-rootfs-$arch.img
-    IMG_SIZE=10G  # 设置镜像文件的大小，你可以根据需要调整大小
+    IMG_SIZE=1G  # 设置镜像文件的大小，你可以根据需要调整大小
 
     # 使用 fallocate 创建空文件，避免使用 dd
     fallocate -l $IMG_SIZE $IMG_FILE

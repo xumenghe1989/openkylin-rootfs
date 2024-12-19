@@ -39,7 +39,7 @@ for arch in amd64 arm64; do
 
     # 创建一个空的磁盘镜像文件
     IMG_FILE=$OUT_DIR/$dist_name-rootfs-$arch.img
-    IMG_SIZE=2G  # 设置镜像文件的大小，你可以根据需要调整大小
+    IMG_SIZE=4G  # 设置镜像文件的大小，你可以根据需要调整大小
 
     # 创建一个空的磁盘镜像文件
     dd if=/dev/zero of=$IMG_FILE bs=1M count=0 seek=$IMG_SIZE

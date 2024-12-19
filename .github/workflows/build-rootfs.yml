@@ -58,6 +58,6 @@ jobs:
         with:
           name: rootfs-files
           path: |
-            rootfs/openkylin-rootfs-amd64.tar.gz
-            rootfs/openkylin-rootfs-arm64.tar.gz
-            rootfs/openkylin-rootfs-riscv64.tar.gz
+            rootfs/openkylin-rootfs-amd64.img
+            rootfs/openkylin-rootfs-arm64.img
+            rootfs/openkylin-rootfs-riscv64.img

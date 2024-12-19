@@ -37,11 +37,30 @@ for arch in amd64 arm64; do
         $ROOTFS \
         "${REPOS[@]}"
 
-    # 生成压缩包
-    pushd $OUT_DIR
-    rm -rf $dist_name-rootfs-$arch.tar.gz
-    sudo tar -zcf $dist_name-rootfs-$arch.tar.gz -C $ROOTFS .
+    # 创建一个空的磁盘镜像文件
+    IMG_FILE=$OUT_DIR/$dist_name-rootfs-$arch.img
+    IMG_SIZE=2G  # 设置镜像文件的大小，你可以根据需要调整大小
+
+    # 创建一个空的磁盘镜像文件
+    dd if=/dev/zero of=$IMG_FILE bs=1M count=0 seek=$IMG_SIZE
+
+    # 格式化该磁盘镜像为 ext4 文件系统
+    sudo mkfs.ext4 $IMG_FILE
+
+    # 挂载镜像文件
+    MOUNT_DIR=$(mktemp -d)
+    sudo mount -o loop $IMG_FILE $MOUNT_DIR
+
+    # 将根文件系统内容从临时目录复制到镜像文件中
+    sudo rsync -a $ROOTFS/ $MOUNT_DIR/
+
+    # 卸载镜像文件
+    sudo umount $MOUNT_DIR
+    sudo rmdir $MOUNT_DIR
+
     # 删除临时文件夹
     sudo rm -rf  $ROOTFS
-    popd
+
+    # 打包成 .img 文件（已经是镜像文件，不需要额外压缩）
+    echo "Generated: $IMG_FILE"
 done
